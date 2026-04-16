@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "660704758185",
+    "project_id": "sliet-hub",
+    "storage_bucket": "sliet-hub.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660704758185:android:a36e3b95eaca7163211cb8",
+        "android_client_info": {
+          "package_name": "com.example.sliet_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5hIdHe9rZWIr2vTgRrYElXv9E1XPEEbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
