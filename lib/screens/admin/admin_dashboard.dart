@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/timetable_model.dart';
 import '../../models/holiday_model.dart';
 import '../../utils/hostel_utils.dart';
+import '../../services/auth_service.dart';
 
 class AdminDashboard extends ConsumerStatefulWidget {
   const AdminDashboard({super.key});
@@ -37,6 +38,13 @@ class _AdminDashboardState extends ConsumerState<AdminDashboard>
             style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () async => AuthService().logOut(),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,

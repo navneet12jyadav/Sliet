@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controllers/data_controller.dart';
-import '../../controllers/auth_controller.dart';
 import '../../models/timetable_model.dart';
 import '../../models/holiday_model.dart';
 import '../../utils/day_cycle_calculator.dart';
