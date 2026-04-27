@@ -6,18 +6,29 @@ import 'controllers/auth_controller.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/dashboards/student_dashboard.dart';
 import 'screens/auth/complete_profile_screen.dart';
+import 'screens/admin/admin_dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const ProviderScope(child: SlietHubApp()));
+  runApp(const ProviderScope(child: ApexApp()));
 }
 
-class SlietHubApp extends StatelessWidget {
-  const SlietHubApp({super.key});
+class ApexApp extends StatelessWidget {
+  const ApexApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'SLIET Hub', home: const AuthWrapper());
+    return MaterialApp(
+      title: 'APEX – SLIET Campus',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          primary: Colors.deepPurple,
+        ),
+        useMaterial3: true,
+      ),
+      home: const AuthWrapper(),
+    );
   }
 }
 
@@ -39,27 +50,41 @@ class AuthWrapper extends ConsumerWidget {
 
         return userDataAsync.when(
           data: (appUser) {
-            if (appUser == null) return const Scaffold(body: Center(child: Text('Profile not found.')));
-            
-            // THE NEW TRAFFIC COP LOGIC:
-            // If fathersName is null or empty, force them to complete their profile
+            if (appUser == null) {
+              return const Scaffold(
+                body: Center(child: Text('Profile not found.')),
+              );
+            }
+
+            // If profile is incomplete, force completion
             if (appUser.fathersName == null || appUser.fathersName!.isEmpty) {
               return CompleteProfileScreen(user: appUser);
             }
-            
-            // Otherwise, they are fully onboarded! Route based on role:
-            if (appUser.role == 'admin') return const Scaffold(body: Center(child: Text('Admin Dashboard')));
-            if (appUser.role == 'teacher') return const Scaffold(body: Center(child: Text('Teacher Dashboard')));
-            
+
+            // Route based on role
+            if (appUser.role == 'admin' ||
+                appUser.role == 'teacher' ||
+                appUser.role == 'classRep') {
+              return const AdminDashboard();
+            }
+
             // Default to Student Dashboard
             return const StudentDashboard();
           },
-          loading: () => const Scaffold(body: Center(child: CircularProgressIndicator())),
-          error: (e, _) => Scaffold(body: Center(child: Text('Error: $e'))),
+          loading: () => const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
+          error: (e, _) => Scaffold(
+            body: Center(child: Text('Error: $e')),
+          ),
         );
       },
-      loading: () => const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (e, _) => Scaffold(body: Center(child: Text('Auth Error: $e'))),
+      loading: () => const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      ),
+      error: (e, _) => Scaffold(
+        body: Center(child: Text('Auth Error: $e')),
+      ),
     );
   }
 }
