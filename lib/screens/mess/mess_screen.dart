@@ -192,7 +192,7 @@ class _MealCard extends StatelessWidget {
       case 'breakfast':
         return Colors.orange;
       case 'lunch':
-        return Colors.amber[700]!;
+        return Colors.amber[700] ?? Colors.amber;
       case 'dinner':
         return Colors.deepPurple;
       default:
